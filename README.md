@@ -1,63 +1,52 @@
-# Realtime chat example using Supabase
+# 使用Supabase的实时聊天实例
 
-This is a full-stack Slack clone example using:
+这是一个全栈的Slack克隆例子，使用的是:
 
-- Frontend:
+- 前端:
   - Next.js.
-  - [Supabase.js](https://supabase.com/docs/library/getting-started) for user management and realtime data syncing.
-- Backend:
-  - [app.supabase.com](https://app.supabase.com/): hosted Postgres database with restful API for usage with Supabase.js.
+  - [Supabase.js](https://supabase.com/docs/library/getting-started) 用于用户管理和实时数据同步.
+- 后端:
+  - [app.supabase.com](https://app.supabase.com/): 带有restful API的托管Postgres数据库，用于Supabase.js的使用。.
 
-## Demo
-
-- Live demo: http://supabase-slack-clone-supabase.vercel.app/
-- CodeSandbox: https://codesandbox.io/s/github/supabase/supabase/tree/master/examples/nextjs-slack-clone
 
 ![Demo animation gif](./public/slack-clone-demo.gif)
 
 ## Deploy your own
 
-### 1. Create new project
+### 1. 创建新项目
 
-Sign up to Supabase - [https://app.supabase.com](https://app.supabase.com) and create a new project. Wait for your database to start.
+注册Supabase - [https://app.supabase.com](https://app.supabase.com) 并创建一个新项目。 等待你的数据库启动。
 
-### 2. Run "Slack Clone" Quickstart
+### 2. 运行 "Slack Clone "快速入门
 
-Once your database has started, run the "Slack Clone" quickstart.
+一旦你的数据库启动，运行 "Slack Clone"快速入门。
 
-![Slack Clone Quick Start](https://user-images.githubusercontent.com/1811651/101558751-73fecc80-3974-11eb-80be-423fa2789877.png)
+![Slack 克隆快速入门](https://user-images.githubusercontent.com/1811651/101558751-73fecc80-3974-11eb-80be-423fa2789877.png)
 
-### 3. Get the URL and Key
+### 3. 获取URL和密钥
 
-Go to the Project Settings (the cog icon), open the API tab, and find your API URL and `anon` key. You'll need these in the next step.
+进入项目设置（齿轮图标），打开API标签，并找到你的API URL和`anon`密钥。你将在下一步中需要这些。
 
-The `anon` key is your client-side API key. It allows "anonymous access" to your database, until the user has logged in. Once they have logged in, the keys will switch to the user's own login token. This enables row level security for your data. Read more about this [below](#postgres-row-level-security).
+`anon`密钥是你的客户端API密钥。它允许 "匿名访问 "你的数据库，直到用户登录。一旦他们登录了，密钥将切换到用户自己的登录令牌。这使你的数据实现了行级安全。阅读更多相关信息[如下］(#postgres-row-level-security).
 
 ![image](https://user-images.githubusercontent.com/10214025/88916245-528c2680-d298-11ea-8a71-708f93e1ce4f.png)
 
-**_NOTE_**: The `service_role` key has full access to your data, bypassing any security policies. These keys have to be kept secret and are meant to be used in server environments and never on a client or browser.
+**_NOTE_**: `service_role`密钥可以完全访问你的数据，绕过任何安全策略。这些密钥必须保密，而且要在服务器环境中使用，决不能在客户端或浏览器上使用。
 
-### 4. Deploy the Next.js client
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fsupabase%2Fsupabase%2Ftree%2Fmaster%2Fexamples%2Fslack-clone%2Fnextjs-slack-clone&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_KEY&envDescription=Find%20the%20Supabase%20URL%20and%20key%20in%20the%20your%20auto-generated%20docs%20at%20app.supabase.com&project-name=supabase-slack-clone&repo-name=supabase-slack-clone)
+### 4. 如有必要，改变认证设置
 
-Here, we recommend forking this repo so you can deploy through Vercel by clicking the button above. When you click the button, replace the repo URL with your fork's URL.
+![改变认证设置](https://user-images.githubusercontent.com/1811651/101840012-39be3800-3af8-11eb-8c32-73f2fae6299e.png)
 
-You will be asked for a `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_KEY`. Use the API URL and `anon` key from [step 3](#3-get-the-url-and-key).
+在[app.supabase.com](https://app.supabase.com)上，如果有必要，你可以进入认证->设置来改变你的项目的认证设置。在这里，你可以改变网站的URL，它用于确定在用户确认他们的电子邮件地址或试图使用魔法链接登录后重定向到哪里。
 
-### 5. Change authentication settings if necessary
+在这里，你也可以启用外部oauth提供商，如谷歌和GitHub。
 
-![Change auth settings](https://user-images.githubusercontent.com/1811651/101840012-39be3800-3af8-11eb-8c32-73f2fae6299e.png)
-
-On [app.supabase.com](https://app.supabase.com), you can go to Authentication -> Settings to change your auth settings for your project if necessary. Here, you can change the site URL, which is used for determining where to redirect users after they confirm their email addresses or attempt to use a magic link to log in.
-
-Here, you can also enable external oauth providers, such as Google and GitHub.
-
-## How to use
+## 如何使用
 
 ### Using `create-next-app`
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example locally:
+用[npm](https://docs.npmjs.com/cli/init)或[Yarn](https://yarnpkg.com/lang/en/docs/cli/create/)执行[`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app)来启动本地的例子。
 
 ```bash
 npx create-next-app --example with-supabase-auth-realtime-db realtime-chat-app
@@ -65,41 +54,41 @@ npx create-next-app --example with-supabase-auth-realtime-db realtime-chat-app
 yarn create next-app --example with-supabase-auth-realtime-db realtime-chat-app
 ```
 
-### Download manually
+### 手动下载
 
-Download the example:
+下载该例子。
 
 ```bash
 curl https://codeload.github.com/vercel/next.js/tar.gz/canary | tar -xz --strip=2 next.js-canary/examples/with-supabase-auth-realtime-db
 cd with-supabase-auth-realtime-db
 ```
 
-### Using this repo
+### 使用此 repo
 
-Simply clone this repo locally and proceed to the next section.
+只需在本地克隆这个 repo，然后进入下一节。
 
-### Required configuration
+### 所需配置
 
-Copy the `.env.local.example` file into a file named `.env.local` in the root directory of the example:
+将`.env.local.example`文件复制到实例的根目录下一个名为`.env.local`的文件。
 
 ```bash
 cp .env.local.example .env.local
 ```
 
-Set your Supabase details from [step 3](#3-get-the-url-and-key) above:
+从上面的[步骤3](#3-获得钥匙)设置你的Supabase。
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=<replace-with-your-API-url>
 NEXT_PUBLIC_SUPABASE_KEY=<replace-with-your-anon-key>
 ```
 
-### Change authentication settings if necessary
+### 如有必要，改变认证设置
 
-Follow [Step #5](#5-change-authentication-settings-if-necessary) above if you want to change the auth settings.
+如果你想改变认证设置，请按照上面的[步骤4](#5-改变认证设置-如果需要)进行。
 
-### Run the development server
+### 运行开发服务器
 
-Now install the dependencies and start the development server.
+现在，安装依赖项并启动开发服务器。
 
 ```bash
 npm install
@@ -109,13 +98,13 @@ yarn
 yarn dev
 ```
 
-Visit http://localhost:3000 and start chatting! Open a channel across two browser tabs to see everything getting updated in realtime 🥳
+访问http://localhost:3000，开始聊天！在两个浏览器标签中打开一个频道，看到所有的东西都在实时更新 🥳
 
-## Supabase details
+## Supabase 细节
 
-### Role-based access control (RBAC)
+### 基于角色的访问控制（RBAC）
 
-Use [plus addressing](https://en.wikipedia.org/wiki/Email_address#Subaddressing) to sign up users with the `admin` & `moderator` roles. Email addresses including `+supaadmin@` will be assigned the `admin` role, and email addresses including `+supamod@` will be assigned the `moderator` role. For example:
+使用[plus addressing](https://en.wikipedia.org/wiki/Email_address#Subaddressing)来注册用户的`admin`和`moderator`角色。包括`+supaadmin@`的电子邮件地址将被分配为`admin`角色，而包括`+supamod@`的电子邮件地址将被分配为`moderator`角色。比如说。
 
 ```
 // admin user
@@ -125,16 +114,16 @@ email+supaadmin@example.com
 email+supamod@example.com
 ```
 
-Users with the `moderator` role can delete all messages. Users with the `admin` role can delete all messages and channels (note: it's not recommended to delete the `public` channel).
+拥有`moderator`角色的用户可以删除所有信息。拥有`admin`角色的用户可以删除所有的消息和频道（注意：不建议删除`public`频道）。
 
-### Postgres Row level security
+### Postgres行级安全
 
-This project uses very high-level Authorization using Postgres' Role Level Security.
-When you start a Postgres database on Supabase, we populate it with an `auth` schema, and some helper functions.
-When a user logs in, they are issued a JWT with the role `authenticated` and their UUID.
-We can use these details to provide fine-grained control over what each user can and cannot do.
+这个项目使用Postgres的角色级安全来进行非常高级的授权。
+当你在Supabase上启动一个Postgres数据库时，我们用`auth`模式和一些辅助函数来填充它。
+当用户登录时，他们会得到一个JWT，其中包含角色`authenticated`和他们的UUID。
+我们可以使用这些细节来对每个用户能做什么和不能做什么进行精细的控制。
 
-Full schema here with role-based access control:
+这里有基于角色的访问控制的完整模式。
 
 ```sql
 --
@@ -302,8 +291,3 @@ values
     ('moderator', 'messages.delete');
 ```
 
-## Authors
-
-- [Supabase](https://supabase.com)
-
-Supabase is open source, we'd love for you to follow along and get involved at https://github.com/supabase/supabase
