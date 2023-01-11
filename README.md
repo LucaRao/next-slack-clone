@@ -67,13 +67,6 @@ cd with-supabase-auth-realtime-db
 
 只需在本地克隆这个 repo，然后进入下一节。
 
-### 所需配置
-
-将`.env.local.example`文件复制到实例的根目录下一个名为`.env.local`的文件。
-
-```bash
-cp .env.local.example .env.local
-```
 
 从上面的[步骤3](#3-获得钥匙)设置你的Supabase。
 
@@ -81,6 +74,10 @@ cp .env.local.example .env.local
 NEXT_PUBLIC_SUPABASE_URL=<replace-with-your-API-url>
 NEXT_PUBLIC_SUPABASE_KEY=<replace-with-your-anon-key>
 ```
+### 所需配置
+
+将apikey和url设置到`.env.local`的文件。
+
 
 ### 如有必要，改变认证设置
 
